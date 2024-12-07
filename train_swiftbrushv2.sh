@@ -1,0 +1,24 @@
+accelerate launch --multi_gpu --num_processes 8 --gpu_ids='all' train_swiftbrush.py \
+  --pretrained_model_name_or_path "/home/share/stabilityai/stable-diffusion-2-1-base" \
+  --pretrained_sd_turbo "stabilityai/sd-turbo" \
+  --train_data_dir "/path/to/text_embeddings_folder" \
+  --resolution 512 \
+  --use_parallel \
+  --validation_prompts "A racoon wearing formal clothes, wearing a tophat. Oil painting in the style of Rembrandt" "a zoomed out DSLR photo of a hippo biting through a watermelon" "a lanky tall alien on a romantic date at italian restaurant with a smiling woman, nice restaurant, photography, bokeh" \
+  --validation_steps 500 \
+  --train_batch_size 16 \
+  --gradient_accumulation_steps 1 \
+  --set_grads_to_none \
+  --guidance_scale 4.5 \
+  --learning_rate 1.e-08 \
+  --learning_rate_lora 1.e-06 \
+  --lr_scheduler "constant" --lr_warmup_steps 0 \
+  --lora_rank 64 --lora_alpha 128 \
+  --lora_rank_stu 256 --lora_alpha_stu 512 \
+  --num_train_epochs 3 \
+  --checkpointing_steps 10000 \
+  --gradient_checkpoint \
+  --use_8bit_adam \
+  --num_inference_steps 4 \
+  --enable_xformers_memory_efficient_attention \
+  --mixed_precision "fp16"
